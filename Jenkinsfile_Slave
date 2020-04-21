@@ -13,7 +13,7 @@ pipeline{
 		}}
 	    stage('Build'){
 		steps{
-			sh '/home/server1/apache-maven-3.6.3/bin/mvn install'
+			sh 'JAVA_HOME=/home/server1/jdk1.8.0_241 /home/server1/apache-maven-3.6.3/bin/mvn install'
 		}}
 	    stage('Deployment'){
 		steps{
