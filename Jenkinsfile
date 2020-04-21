@@ -8,7 +8,7 @@ pipeline{
 		   }}
 	   stage('Build'){
 	     steps {
-		     sh '/home/serevr1/apache-maven-3.6.3/bin/mvn install'
+		     sh '/home/devops/Documents/apache-maven-3.6.3/bin/mvn install'
 		   }}
 	   stage('deploy'){
 	     steps {
