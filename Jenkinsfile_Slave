@@ -1,0 +1,36 @@
+pipeline{
+	agent {
+		label 'Slave-1'
+	}
+	parameters {
+		choice(name: 'ENVIRONMENT', choices: ['QA','SIT'], description: 'Pick Environment value')
+	}
+	
+	stages{
+	    stage('Checkout'){
+		steps{
+			checkout scm
+		}}
+	    stage('Build'){
+		steps{
+			sh '/home/server1/apache-maven-3.6.3/bin/mvn install'
+		}}
+	    stage('Deployment'){
+		steps{
+		    
+                  script{
+	
+			 if (ENVIRONMENT == 'QA'){
+				sh 'sshpass -p "server1" scp target/flipkart-web.war server1@172.17.0.2:/home/server1/apache-tomcat-9.0.33/webapps'
+				
+				echo "Hello ${params.ENVIRONMENT}"
+			}
+			else if (ENVIRONMENT == 'SIT'){
+
+				 sh 'sshpass -p "server1" scp target/flipkart-web.war server1@172.17.0.3:/home/server1/apache-tomcat-9.0.33/webapps'
+					
+				 echo "Hello ${params.ENVIRONMENT}"
+			}
+		}}}
+} 
+}
